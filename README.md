@@ -5,6 +5,14 @@
 ## Excellent ABC
 https://blogs.msdn.microsoft.com/sqlexpress/2011/07/12/introducing-localdb-an-improved-sql-express/
 
+### Sub process of your process
+![Sub process](https://github.com/yhan/LocalDbSpike/blob/master/images/subprocess.png)
+
+
+LocalDB process is started as a child process of the application. A few minutes after the last connection to this process is closed the process shuts down
+
+![Stop](https://github.com/yhan/LocalDbSpike/blob/master/images/subprocess_stopped.png)
+
 ## Version
 
 Regarding localdb based Unit testing, using mdf mount/unmount, we may have version compatibility issue.
