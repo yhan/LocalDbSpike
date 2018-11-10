@@ -13,6 +13,21 @@ LocalDB process is started as a child process of the application. A few minutes 
 
 ![Stop](https://github.com/yhan/LocalDbSpike/blob/master/images/subprocess_stopped.png)
 
+## Safe detach and attach mdf file
+
+```sql
+-- detach
+if db_id('Caraibes') is not null
+				begin
+					alter database Caraibes set offline with rollback immediate;
+					exec sp_detach_db 'Caraibes';
+				end
+
+-- attach
+create database Caraibes on (filename = 'C:\\users\\hanyi\\Caraibes.mdf') for attach;
+```
+
+
 ## Version
 
 Regarding localdb based Unit testing, using mdf mount/unmount, we may have version compatibility issue.
