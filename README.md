@@ -52,15 +52,15 @@ Amount/ Unmount on (LocalDB)\MSSQLLocalDB will work anyway. I would suggest usin
 Hereunder sql server version, internal database version mapping (http://sqlserverbuilds.blogspot.com/2014/01/sql-server-internal-database-versions.html
 )
 
-SQL Server Version	Internal Database Version	Database Compatibility Level
-SQL Server 2019 CTP
-895	150
-SQL Server 2017 OR last .\SQLEXPRESS	869	140
-SQL Server 2016
-852	130
-SQL Server 2014
-782	120
-SQL Server 2012 OR (localdb)\v11.0	706	110
+select @@VERSION
+--mssqllocaldb - 2016 - 852
+
+
+select @@VERSION
+--v11.0 - 2012 - 706
+
+select @@VERSION
+--Sqlexpress - 2017 - 869
 
 ```sql
 SELECT @@version
