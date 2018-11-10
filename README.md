@@ -65,9 +65,10 @@ SELECT @@version
 
 ### Progmatically determin mdf database version
 
+ * C#
+
 https://social.msdn.microsoft.com/Forums/sqlserver/en-US/3de5b574-0751-44a2-b69f-fa0c20378359/how-to-determine-sql-server-version-of-an-mdf-file?forum=sqlsetupandupgrade
 
-http://rusanu.com/2011/04/04/how-to-determine-the-database-version-of-an-mdf-file/
 
 ```CSharp
 public int GetDbiVersion(string anMdfFilename) {
@@ -92,4 +93,34 @@ public int GetDbiVersion(string anMdfFilename) {
 
  return dbiVersion;
 }
+```
+
+ * Powershell
+
+```powershell
+PS C:\Users\KAUSHAL> get-content -Encoding Byte "C:\Program Files\Microsoft SQL Server\MSSQL11.MSSQLSERVER\MSSQL\DATA\NORTHWND.mdf" | select-object -skip 0x12064 -first 2
+194
+2
+PS C:\Users\KAUSHAL> 2*256+194
+706
+```
+
+ * Transac-SQL
+http://rusanu.com/2011/04/04/how-to-determine-the-database-version-of-an-mdf-file/
+```sql
+dbcc traceon(3604)
+dbcc page(1,1,9,3);
+the important bits of information are these:
+
+
+...
+Memory Dump @0x00000000124FA060
+0000000000000000:   0000a405 95029502 00000000 00000000 †..¤........... 
+...
+DBINFO @0x00000000124FA060
+...
+dbi_dbid = 1                         dbi_status = 65544                   dbi_nextid = 1723153184
+dbi_dbname = master                  dbi_maxDbTimestamp = 4000            dbi_version = 661
+dbi_createVersion = 661              dbi_ESVersion = 0                    
+...
 ```
