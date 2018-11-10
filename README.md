@@ -67,6 +67,8 @@ SELECT @@version
 
 https://social.msdn.microsoft.com/Forums/sqlserver/en-US/3de5b574-0751-44a2-b69f-fa0c20378359/how-to-determine-sql-server-version-of-an-mdf-file?forum=sqlsetupandupgrade
 
+http://rusanu.com/2011/04/04/how-to-determine-the-database-version-of-an-mdf-file/
+
 ```CSharp
 public int GetDbiVersion(string anMdfFilename) {
  int dbiVersion = -1;
