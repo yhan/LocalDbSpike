@@ -62,3 +62,32 @@ SELECT @@version
 SELECT @@version
 --.\SQLEXPRESS ===> Microsoft SQL Server 2017 (RTM) - 14.0.1000.169 (X64)   Aug 22 2017 17:04:49   Copyright (C) 2017 Microsoft Corporation  Express Edition (64-bit) on Windows 10 Enterprise 10.0 <X64> (Build 16299: )
 ```
+
+### Progmatically determin mdf database version
+
+https://social.msdn.microsoft.com/Forums/sqlserver/en-US/3de5b574-0751-44a2-b69f-fa0c20378359/how-to-determine-sql-server-version-of-an-mdf-file?forum=sqlsetupandupgrade
+
+```CSharp
+public int GetDbiVersion(string anMdfFilename) {
+ int dbiVersion = -1;
+
+ try {
+  using(FileStream fs = File.OpenRead(anMdfFilename)) {
+   using(BinaryReader br = new BinaryReader(fs)) {
+    // Skip pages 0-8 (8 KB each) of the .mdf file,
+    // plus the 96 byte header of page 9 and the
+    // first 4 bytes of the body of page 9,
+    // then read the next 2 bytes
+
+    br.ReadBytes(9 * 8192 + 96 + 4);
+
+    byte[] buffer = br.ReadBytes(2);
+
+    dbiVersion = buffer[0] + 256 * buffer[1];
+   }
+  }
+ } catch {}
+
+ return dbiVersion;
+}
+```
